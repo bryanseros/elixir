@@ -5,6 +5,7 @@ defmodule App.Infrastructure.EntryPoint.ApiRest do
   alias App.Utils.DataTypeUtils
   alias App.Infrastructure.EntryPoint.ErrorHandler
   alias App.Infrastructure.EntryPoints.ClientRequestValidation
+  alias App.Domain.UseCase.GetInformation
   alias App.Domain.Model.Client
   require Logger
   use Plug.Router
@@ -40,7 +41,8 @@ defmodule App.Infrastructure.EntryPoint.ApiRest do
   post "/api/registration" do
     try do
       with request <- conn.body_params |> DataTypeUtils.normalize(),
-           headers <- conn.req_headers |> DataTypeUtils.normalize_headers(),
+           #headers <- conn.req_headers |> DataTypeUtils.normalize_headers(),
+           {:ok, :consulta} <- GetInformation.get_information(),
            {:ok, request} <- ClientRequestValidation.validate_request_body(request),
            {:ok, body} <- Client.new_client(request) do
         build_response(body, conn)

@@ -9,7 +9,7 @@ defmodule App.Infrastructure.Adapters.RestConsumer.Information.InformationAdapte
   def get() do
     %{information_url: url} = ConfigHolder.conf()
 
-    with {:ok, %Finch.Response{body: body}} <- Finch.build(:get, url) |> Finch.request(HttpFinch),
+    with {:ok, %Finch.Response{body: body}} <- Finch.build(:get, url) |> IO.inspect() |> Finch.request(HttpFinch) |> IO.inspect(),
          {:ok, response} <- Poison.decode(body) do
       {:ok, response}
     end

@@ -19,4 +19,7 @@ config :opentelemetry,
   traces_exporter: {:otel_exporter_stdout, []}
 
 config :app,
-  information_url: "https://jsonplaceholder.typicode.com/todos"
+  information_url: "http://localhost:3001/getInfo"
+
+config :app,
+  get_identity: App.Infrastructure.Adapters.RestConsumer.Information.InformationAdapter
