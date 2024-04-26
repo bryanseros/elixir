@@ -18,6 +18,7 @@ defmodule App.Application do
     CustomTelemetry.custom_telemetry_events()
     OpentelemetryPlug.setup()
     OpentelemetryFinch.setup()
+    OpentelemetryFinch.setup()
     opts = [strategy: :one_for_one, name: App.Supervisor]
     Supervisor.start_link(children, opts)
   end
@@ -41,7 +42,8 @@ defmodule App.Application do
   end
 
   def env_children(_other_env) do
-    []
+    [
+			{Finch, name: HttpFinch, pools: %{:default => [size: 500]}},]
   end
 
 end

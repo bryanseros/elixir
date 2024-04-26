@@ -17,3 +17,6 @@ config :logger,
 config :opentelemetry,
   span_processor: :batch,
   traces_exporter: {:otel_exporter_stdout, []}
+
+config :app,
+  information_url: "https://jsonplaceholder.typicode.com/todos"

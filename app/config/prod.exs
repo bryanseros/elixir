@@ -21,3 +21,6 @@ config :opentelemetry,
 config :opentelemetry_exporter,
   otlp_protocol: :http_protobuf,
   otlp_endpoint: "http://localhost:4318"
+
+config :app,
+  information_url: "https://jsonplaceholder.typicode.com/todos"

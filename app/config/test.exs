@@ -26,3 +26,6 @@ config :elixir_structure_manager, # used with mix ca.release --container
 config :opentelemetry,
   span_processor: :batch,
   traces_exporter: {:otel_exporter_stdout, []}
+
+config :app,
+  information_url: "https://jsonplaceholder.typicode.com/todos"

@@ -42,6 +42,7 @@ defmodule App.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:finch, "~> 0.14"},
       {:opentelemetry_finch, "~> 0.1"},
       {:opentelemetry_plug, git: "https://github.com/bancolombia/opentelemetry_plug.git", tag: "master"},
       {:opentelemetry_api, "~> 1.0"},
@@ -62,7 +63,7 @@ defmodule App.MixProject do
       {:cors_plug, "~> 3.0"},
       {:timex, "~> 3.0"},
       {:excoveralls, "~> 0.18", only: :test},
-      {:elixir_structure_manager, ">= 0.0.0", only: [:dev, :test]},
+      {:elixir_structure_manager, ">= 1.3.4", only: [:dev, :test]},
     ]
   end
 end

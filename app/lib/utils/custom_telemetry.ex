@@ -37,8 +37,36 @@ defmodule App.Utils.CustomTelemetry do
     :telemetry.execute([:elixir | metric], measures, metadata)
   end
 
+# Finch
+  def extract_metadata(%{
+        name: HttpFinch,
+        request: %{method: method, scheme: scheme, host: host, port: port, path: path},
+        result: {_, %{status: status}}
+      }) do
+    %{
+      request_path: "#{method} #{scheme}://#{host}:#{port}#{path}",
+      status: "#{status}",
+      service: @service_name
+    }
+  end
+
 def metrics do
     [
+      # Http Outgoing Requests
+      counter("elixir.http_outgoing_request.count",
+        event_name: [:finch, :request, :stop],
+        tag_values: &__MODULE__.extract_metadata/1,
+        tags: [:service, :request_path, :status]
+      ),
+      sum(
+        "elixir.http_outgoing_request.duration",
+        event_name: [:finch, :request, :stop],
+        measurement: :duration,
+        unit: {:native, :nanosecond},
+        tag_values: &__MODULE__.extract_metadata/1,
+        tags: [:service, :request_path, :status]
+      ),
+
       # Http Outgoing Requests
       counter("elixir.http_outgoing_request.count",
         event_consumer: [:finch, :request, :stop],
